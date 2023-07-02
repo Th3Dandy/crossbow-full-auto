@@ -8,6 +8,10 @@
     "Christopher Angelo <angelo@angeloanan.xyz>"
   ],
   "contact": {
+    "email": "angelo+modrinth@angeloanan.xyz",
+    "homepage": "https://angeloanan.xyz/",
+    "issues": "https://github.com/angeloanan/crossbow-auto-release/issues",
+    "sources": "https://github.com/angeloanan/crossbow-auto-release",
     "repo": "https://github.com/angeloanan/crossbow-auto-release"
   },
   "license": "GPL-3.0",
