@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "id": "crossbow-release",
+  "id": "crossbow_release",
   "version": "${version}",
   "name": "Crossbow Auto Release",
   "description": "Automatically releases a crossbow when fully charged.",
