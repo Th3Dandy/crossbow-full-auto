@@ -6,6 +6,8 @@ import net.fabricmc.fabric.api.event.player.UseItemCallback;
 import net.minecraft.item.CrossbowItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
+import net.minecraft.sound.SoundCategory;
+import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.TypedActionResult;
 import xyz.angeloanan.crossbowrelease.CrossbowAutoRelease;
 
@@ -69,6 +71,9 @@ public class CrossbowAutoReleaseClient implements ClientModInitializer {
 
                 // Send crossbow release packet
                 client.interactionManager.stopUsingItem(client.player);
+
+                // Play XP sound on master channel
+                client.player.playSound(SoundEvents.UI_BUTTON_CLICK.value(), SoundCategory.MASTER, 0.5F, 2.0F);
 
                 // Ignore right click until player releases right click
                 // If this is false, crossbow rapid fire go brrrrr
