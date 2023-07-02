@@ -36,6 +36,7 @@ public class CrossbowAutoReleaseClient implements ClientModInitializer {
             CrossbowAutoRelease.LOGGER.debug("Current crossbow pull time: " + pullTime);
 
             chargeTime = pullTime;
+            currentTick = 0;
             isCharging = true;
 
             return TypedActionResult.pass(handItem);
