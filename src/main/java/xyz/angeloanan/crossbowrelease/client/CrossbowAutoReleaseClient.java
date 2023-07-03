@@ -46,7 +46,7 @@ public class CrossbowAutoReleaseClient implements ClientModInitializer {
         });
         CrossbowAutoRelease.LOGGER.debug("Crossbow Auto Release is now listening on item use events!");
 
-        ClientTickEvents.END_CLIENT_TICK.register(client -> {
+        ClientTickEvents.START_CLIENT_TICK.register(client -> {
             if (shouldIgnoreRightClick && !client.mouse.wasRightButtonClicked()) {
                 shouldIgnoreRightClick = false;
                 return;
