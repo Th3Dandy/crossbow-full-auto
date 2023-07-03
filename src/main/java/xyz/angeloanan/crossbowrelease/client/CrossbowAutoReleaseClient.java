@@ -59,7 +59,7 @@ public class CrossbowAutoReleaseClient implements ClientModInitializer {
                 return;
             }
 
-            if (currentTick > chargeTime) {
+            if (currentTick >= chargeTime) {
                 CrossbowAutoRelease.LOGGER.debug("Crossbow fully charged!");
 
                 // Reset charging state
