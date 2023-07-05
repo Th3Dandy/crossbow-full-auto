@@ -90,8 +90,13 @@ public class CrossbowAutoReleaseClient implements ClientModInitializer {
                 client.interactionManager.stopUsingItem(client.player);
 
                 // Play XP sound on master channel
-                SoundEvent sound = SoundEvents.UI_BUTTON_CLICK.value();
-                client.player.playSound(sound, SoundCategory.MASTER, 0.5F, 2.0F);
+                if (config.sound.enabled) {
+                    SoundEvent sound = SoundEvents.UI_BUTTON_CLICK.value();
+                    float volume = config.sound.volume / 10.0F;
+                    float pitch = config.sound.pitch / 10.0F;
+
+                    client.player.playSound(sound, SoundCategory.MASTER, volume, pitch);
+                }
 
                 // Ignore right click until player releases right click
                 // If this is false, crossbow rapid fire go brrrrr

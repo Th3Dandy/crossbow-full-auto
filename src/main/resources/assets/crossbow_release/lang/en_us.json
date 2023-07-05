@@ -1,5 +1,10 @@
 {
   "text.autoconfig.crossbow_release.title": "Crossbow Auto Release Configuration",
 
-  "text.autoconfig.crossbow_release.option.compensation": "Compensation (ticks)"
+  "text.autoconfig.crossbow_release.option.compensation": "Compensation (ticks)",
+
+  "text.autoconfig.crossbow_release.option.sound": "Feedback Sound",
+  "text.autoconfig.crossbow_release.option.sound.enabled": "Enabled",
+  "text.autoconfig.crossbow_release.option.sound.volume": "Volume",
+  "text.autoconfig.crossbow_release.option.sound.pitch": "Pitch"
 }
