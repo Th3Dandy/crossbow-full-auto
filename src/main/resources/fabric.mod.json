@@ -15,21 +15,23 @@
     "repo": "https://github.com/angeloanan/crossbow-auto-release"
   },
   "license": "GPL-3.0",
-  "icon": "assets/crossbow-release/icon.png",
+  "icon": "assets/crossbow_release/icon.png",
   "environment": "client",
   "entrypoints": {
     "client": [
       "xyz.angeloanan.crossbowrelease.client.CrossbowAutoReleaseClient"
     ],
-    "main": [
-      "xyz.angeloanan.crossbowrelease.CrossbowAutoRelease"
+    "modmenu": [
+      "xyz.angeloanan.crossbowrelease.client.ModMenuIntegration"
     ]
   },
   "mixins": [],
   "depends": {
     "fabricloader": ">=${loader_version}",
     "fabric": "*",
-    "minecraft": ">=1.19.4"
+    "minecraft": ">=1.19.4",
+    "modmenu": ">=${modmenu_version}",
+    "cloth-config": ">=${cloth_config_version}"
   },
   "custom": {
     "modmenu": {

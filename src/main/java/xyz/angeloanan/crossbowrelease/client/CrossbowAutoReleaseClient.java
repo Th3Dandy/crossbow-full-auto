@@ -1,5 +1,7 @@
 package xyz.angeloanan.crossbowrelease.client;
 
+import me.shedaniel.autoconfig.AutoConfig;
+import me.shedaniel.autoconfig.serializer.GsonConfigSerializer;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.fabric.api.event.player.UseItemCallback;
@@ -10,9 +12,15 @@ import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.TypedActionResult;
-import xyz.angeloanan.crossbowrelease.CrossbowAutoRelease;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class CrossbowAutoReleaseClient implements ClientModInitializer {
+    public static final String MOD_ID = "crossbow_release";
+    public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
+
+    public ModConfig config;
+
     private int currentTick = 0;
     private int chargeTime = 0;
     private boolean isCharging = false;
@@ -20,7 +28,10 @@ public class CrossbowAutoReleaseClient implements ClientModInitializer {
 
     @Override
     public void onInitializeClient() {
-        CrossbowAutoRelease.LOGGER.info("Crossbow Auto Release initializing...");
+        LOGGER.info("Crossbow Auto Release initializing...");
+
+        AutoConfig.register(ModConfig.class, GsonConfigSerializer::new);
+        config = AutoConfig.getConfigHolder(ModConfig.class).getConfig();
 
         UseItemCallback.EVENT.register((player, world, hand) -> {
             ItemStack handItem = player.getStackInHand(hand);
@@ -32,35 +43,40 @@ public class CrossbowAutoReleaseClient implements ClientModInitializer {
             // CASE: Player is not holding a crossbow
             if (!handItem.getItem().equals(Items.CROSSBOW)) return TypedActionResult.pass(handItem);
 
-            // CASE: Crossbow is already fully charged
+            // CASE: Crossbow is already fully charged and is going to be fired
             if (CrossbowItem.isCharged(handItem)) return TypedActionResult.pass(handItem);
 
             int pullTime = CrossbowItem.getPullTime(handItem);
-            CrossbowAutoRelease.LOGGER.debug("Current crossbow pull time: " + pullTime);
+            LOGGER.debug("Current crossbow pull time: " + pullTime);
+            LOGGER.debug("Compensation: " + config.compensation);
 
-            chargeTime = pullTime;
+            chargeTime = pullTime + config.compensation;
             currentTick = 0;
             isCharging = true;
 
             return TypedActionResult.pass(handItem);
         });
-        CrossbowAutoRelease.LOGGER.debug("Crossbow Auto Release is now listening on item use events!");
+        LOGGER.debug("Crossbow Auto Release is now listening on item use events!");
 
         ClientTickEvents.START_CLIENT_TICK.register(client -> {
+            // Reset ignoreRightClick state if player stops holding right-click
             if (shouldIgnoreRightClick && !client.mouse.wasRightButtonClicked()) {
                 shouldIgnoreRightClick = false;
                 return;
             }
 
+            // CASE: Crossbow is not being charged
             if (!isCharging) return;
 
+            // CASE: Player is not holding a crossbow
             if (!(client.player != null && client.player.isUsingItem())) {
                 isCharging = false;
                 return;
             }
 
+            // CASE: Crossbow is already fully charged
             if (currentTick >= chargeTime) {
-                CrossbowAutoRelease.LOGGER.debug("Crossbow fully charged!");
+                LOGGER.debug("Crossbow fully charged!");
 
                 // Reset charging state
                 isCharging = false;
@@ -85,10 +101,10 @@ public class CrossbowAutoReleaseClient implements ClientModInitializer {
             }
 
             currentTick += 1;
-            CrossbowAutoRelease.LOGGER.trace("Current tick: " + currentTick);
+            LOGGER.trace("Current tick: " + currentTick);
         });
-        CrossbowAutoRelease.LOGGER.debug("Crossbow Auto Release is now running fn on every client tick!");
+        LOGGER.debug("Crossbow Auto Release is now running fn on every client tick!");
 
-        CrossbowAutoRelease.LOGGER.info("Crossbow Auto Release initialized!");
+        LOGGER.info("Crossbow Auto Release initialized!");
     }
 }
