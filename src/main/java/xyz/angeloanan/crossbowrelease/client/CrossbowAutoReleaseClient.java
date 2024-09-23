@@ -46,7 +46,7 @@ public class CrossbowAutoReleaseClient implements ClientModInitializer {
             // CASE: Crossbow is already fully charged and is going to be fired
             if (CrossbowItem.isCharged(handItem)) return TypedActionResult.pass(handItem);
 
-            int pullTime = CrossbowItem.getPullTime(handItem);
+            int pullTime = CrossbowItem.getPullTime(handItem, player);
             LOGGER.debug("Current crossbow pull time: " + pullTime);
             LOGGER.debug("Compensation: " + config.compensation);
 
@@ -95,7 +95,7 @@ public class CrossbowAutoReleaseClient implements ClientModInitializer {
                     float volume = config.sound.volume / 10.0F;
                     float pitch = config.sound.pitch / 10.0F;
 
-                    client.player.playSound(sound, SoundCategory.MASTER, volume, pitch);
+                    client.player.playSound(sound, volume, pitch);
                 }
 
                 // Ignore right click until player releases right click
