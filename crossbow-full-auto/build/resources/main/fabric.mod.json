@@ -1,0 +1,41 @@
+{
+  "schemaVersion": 1,
+  "id": "crossbow_full_auto",
+  "version": "0.3.0",
+  "name": "Crossbow Full Auto",
+  "description": "Just hold right click and watch your crossbow fire full auto, requires Quick Charge III.",
+  "authors": [
+    "Falink"
+  ],
+  "contact": {
+    "email": "angelo+modrinth@angeloanan.xyz",
+    "homepage": "https://angeloanan.xyz/",
+    "issues": "https://github.com/angeloanan/crossbow-auto-release/issues",
+    "sources": "https://github.com/angeloanan/crossbow-auto-release",
+    "repo": "https://github.com/angeloanan/crossbow-auto-release"
+  },
+  "license": "GPL-3.0",
+  "icon": "assets/crossbow_release/icon.png",
+  "environment": "client",
+  "entrypoints": {
+    "client": [
+      "xyz.angeloanan.crossbowrelease.client.CrossbowAutoReleaseClient"
+    ],
+    "modmenu": [
+      "xyz.angeloanan.crossbowrelease.client.ModMenuIntegration"
+    ]
+  },
+  "mixins": [],
+  "depends": {
+    "fabricloader": ">=0.16.5",
+    "fabric": "*",
+    "minecraft": ">=1.21",
+    "modmenu": ">=11.0.2",
+    "cloth-config": ">=15.0.140"
+  },
+  "custom": {
+    "modmenu": {
+      "update_checker": true
+    }
+  }
+}
